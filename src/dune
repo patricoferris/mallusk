@@ -1,0 +1,31 @@
+(rule
+ (mode
+  (promote (until-clean)))
+ (targets vmlinux.h arch)
+ (action
+  (progn
+   (with-stdout-to
+    vmlinux.h
+    (run /usr/sbin/bpftool btf dump file /sys/kernel/btf/vmlinux format c))
+   (with-stdout-to
+    arch
+    (bash
+     "uname -m | sed 's/x86_64/x86/' | sed 's/arm.*/arm/' | sed 's/aarch64/arm64/' | sed 's/ppc64le/powerpc/' | sed 's/mips.*/mips/' | sed 's/riscv64/riscv/' | sed 's/loongarch64/loongarch/'")))))
+
+(rule
+ (mode
+  (promote (until-clean)))
+ (targets monitor.bpf.o)
+ (deps arch vmlinux.h monitor.bpf.c)
+ (action
+  (system
+   "clang -g -O2 -target bpf -I/usr/include/%{architecture}-linux-gnu/ -c monitor.bpf.c  -D__TARGET_ARCH_%{read:arch}")))
+
+(executable
+ (name main)
+ (public_name cshell)
+ (preprocessor_deps
+  (file monitor.bpf.o))
+ (preprocess
+  (pps ppx_blob))
+ (libraries ezjsonm search ptime libbpf eio_posix xdg))
