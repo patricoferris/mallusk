@@ -3,7 +3,7 @@
 
 
 (package
-  (name cshell)
+  (name mallusk)
   (depends 
     eio_posix
     ISO8601

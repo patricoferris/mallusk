@@ -23,9 +23,9 @@
 
 (executable
  (name main)
- (public_name cshell)
+ (public_name mallusk)
  (preprocessor_deps
   (file monitor.bpf.o))
  (preprocess
   (pps ppx_blob))
- (libraries ezjsonm search ptime libbpf eio_posix xdg))
+ (libraries ezjsonm search ptime libbpf eio_posix xdg obuilder))

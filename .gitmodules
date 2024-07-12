@@ -1,0 +1,3 @@
+[submodule "vendor/obuilder"]
+	path = vendor/obuilder
+	url = https://github.com/quantifyearth/obuilder
