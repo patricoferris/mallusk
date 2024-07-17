@@ -22,8 +22,8 @@ let create_builder _env store_spec conf =
 
 let log tag msg =
   match tag with
-  | `Heading -> Fmt.epr "%a@." Fmt.(styled (`Fg (`Hi `Blue)) string) msg
-  | `Note -> Fmt.epr "%a@." Fmt.(styled (`Fg `Yellow) string) msg
+  | `Heading -> ()
+  | `Note -> ()
   | `Output ->
       output_string stdout msg;
       flush stdout

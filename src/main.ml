@@ -96,7 +96,9 @@ module Make (A : S.Action) = struct
       let for_action_stdin = Eio.Buf_read.of_flow ~max_size:max_int env#stdin in
       while true do
         A.prompt !ctx;
-        let line = Eio.Buf_read.line for_action_stdin in
+        let line =
+          try Eio.Buf_read.line for_action_stdin with End_of_file -> exit 0
+        in
         match A.run ~env !ctx (A.of_line line) with
         | Ok new_ctx ->
             let state = A.state_of_ctx new_ctx in

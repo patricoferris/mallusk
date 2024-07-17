@@ -28,4 +28,4 @@
   (file monitor.bpf.o))
  (preprocess
   (pps ppx_blob))
- (libraries ezjsonm search ptime libbpf eio_posix xdg obuilder))
+ (libraries ezjsonm search ptime libbpf eio_posix xdg obuilder fmt.tty))
